@@ -1,19 +1,22 @@
-'use strict';
+"use strict";
+
+const { nanoid } = require("nanoid");
+const bcrypt = require("bcryptjs");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     const user = [
       {
-        id: 1,
-        user: 'ADMIN1',
-        password: 'rahasia',
+        id: `SuperAdmin-${nanoid(12)}`,
+        user: "superAdmin",
+        password: await bcrypt.hash("superman", 8),
       },
     ];
-    await queryInterface.bulkInsert('Users', user);
+    await queryInterface.bulkInsert("Users", user);
   },
-  
-  async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Users');
-  }
+
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("Users");
+  },
 };
